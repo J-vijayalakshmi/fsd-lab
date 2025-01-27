@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Library System</title>
+</head>
+<body>
+    <h1>Library System</h1>
+    <button onclick="manageLibrary()">Manage Books</button>
+    <h2 id="output"></h2>
+
+    <script>
+        class Book {
+            constructor(title, author, status = "available") {
+                this.title = title;
+                this.author = author;
+                this.status = status;
+            }
+        }
+
+        class Library {
+            constructor() { this.books = []; }
+            addBook(book) { this.books.push(book); }
+            borrowBook(title) {
+                let book = this.books.find(b => b.title === title && b.status === "available");
+                if (book) book.status = "borrowed";
+            }
+            showBooks() {
+                return this.books.map(b => `${b.title} (${b.status})`).join("<br>");
+            }
+        }
+
+        function manageLibrary() {
+            let lib = new Library();
+            lib.addBook(new Book("JS Guide", "John"));
+            lib.addBook(new Book("HTML Basics", "Alice"));
+            lib.borrowBook("JS Guide");
+            document.getElementById("output").innerHTML = lib.showBooks();
+        }
+    </script>
+</body>
+</html>

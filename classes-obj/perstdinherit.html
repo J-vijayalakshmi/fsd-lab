@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Inheritance</title>
+</head>
+<body>
+    <h1>Inheritance</h1>
+    <button onclick="testInheritance()">Run</button>
+    <h2 id="output"></h2>
+
+    <script>
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+            this.describe = () => `Name: ${this.name}, Age: ${this.age}`;
+        }
+
+        function Student(name, age, grade) {
+            Person.call(this, name, age);
+            this.grade = grade;
+            this.study = () => `${this.name} is studying for grade ${this.grade}.`;
+        }
+
+        function testInheritance() {
+            let student = new Student("John", 20, "A");
+            document.getElementById("output").innerHTML = student.describe() + "<br>" + student.study();
+        }
+    </script>
+</body>
+</html>

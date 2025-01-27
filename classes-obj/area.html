@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Rectangle Area</title>
+</head>
+<body>
+    <h1>Rectangle Area</h1>
+    <button onclick="calculateArea()">Calculate</button>
+    <h2 id="output"></h2>
+
+    <script>
+        class Rectangle {
+            constructor(width, height) {
+                this.width = width;
+                this.height = height;
+            }
+            area() { return this.width * this.height; }
+        }
+
+        function calculateArea() {
+            let rect = new Rectangle(5, 10);
+            document.getElementById("output").innerText = `Area: ${rect.area()}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Task Manager</title>
+</head>
+<body>
+    <h1>Task Manager</h1>
+    <button onclick="manageTasks()">Show Tasks</button>
+    <h2 id="output"></h2>
+
+    <script>
+        class Task {
+            constructor(name, priority, dueDate) {
+                this.name = name;
+                this.priority = priority;
+                this.dueDate = new Date(dueDate);
+            }
+            isOverdue() {
+                return new Date() > this.dueDate;
+            }
+        }
+
+        class TaskManager {
+            constructor() { this.tasks = []; }
+            addTask(task) { this.tasks.push(task); }
+            showTasks() {
+                return this.tasks.map(t => `${t.name} (${t.isOverdue() ? "Overdue" : "Pending"})`).join("<br>");
+            }
+        }
+
+        function manageTasks() {
+            let manager = new TaskManager();
+            manager.addTask(new Task("Project", "High", "2024-12-30"));
+            manager.addTask(new Task("Assignment", "Medium", "2025-01-10"));
+            document.getElementById("output").innerHTML = manager.showTasks();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeout Promise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Timeout Promise</h1>
+    <button onclick="startTimer()">Enter Timeout</button>
+    <script>
+        function timeoutPromise(ms) {
+            return new Promise((_, reject) => {
+                setTimeout(() => reject("Operation timed out"), ms);
+            });
+        }
+        function startTimer() {
+            let time = parseInt(prompt("Enter timeout in milliseconds:"), 10);
+            if (!isNaN(time)) {
+                timeoutPromise(time).catch(alert);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Animal & Dog</title>
+</head>
+<body>
+    <h1>Animal Sounds</h1>
+    <button onclick="showAnimals()">Show Sounds</button>
+    <h2 id="output"></h2>
+
+    <script>
+        class Animal {
+            speak() { return "Some sound"; }
+        }
+        class Dog extends Animal {
+            speak() { return "Woof!"; }
+        }
+
+        function showAnimals() {
+            let animal = new Animal();
+            let dog = new Dog();
+            document.getElementById("output").innerHTML = `Animal: ${animal.speak()}<br>Dog: ${dog.speak()}`;
+        }
+    </script>
+</body>
+</html>

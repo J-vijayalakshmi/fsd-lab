@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Person Object</title>
+</head>
+<body>
+    <h1>Person Details</h1>
+    <label>Name: <input type="text" id="name"></label><br><br>
+    <label>Age: <input type="number" id="age"></label><br><br>
+    <button onclick="createPerson()">Check</button>
+    <h2 id="result"></h2>
+
+    <script>
+        function createPerson() {
+            let person = {
+                name: document.getElementById("name").value,
+                age: parseInt(document.getElementById("age").value),
+                greet() { return `Hello, my name is ${this.name}.`; },
+                isAdult() { return this.age >= 18 ? "Adult" : "Minor"; }
+            };
+            document.getElementById("result").innerHTML = person.greet() + "<br>" + person.isAdult();
+        }
+    </script>
+</body>
+</html>

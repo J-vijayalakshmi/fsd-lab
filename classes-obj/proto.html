@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Prototype vs __proto__</title>
+</head>
+<body>
+    <h1>Prototype vs __proto__</h1>
+    <button onclick="showPrototype()">Show Example</button>
+    <h2 id="output"></h2>
+
+    <script>
+        function showPrototype() {
+            function Animal(name) {
+                this.name = name;
+            }
+            Animal.prototype.speak = function () { return `${this.name} makes a sound.`; };
+
+            let dog = new Animal("Dog");
+            dog.__proto__.bark = function () { return "Woof!"; };
+
+            document.getElementById("output").innerHTML =
+                `Using Prototype: ${dog.speak()}<br>Using __proto__: ${dog.bark()}`;
+        }
+    </script>
+</body>
+</html>

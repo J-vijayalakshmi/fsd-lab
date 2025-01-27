@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bank Account</title>
+</head>
+<body>
+    <h1>Bank Transactions</h1>
+    <button onclick="runBank()">Show Transactions</button>
+    <h2 id="output"></h2>
+
+    <script>
+        class BankAccount {
+            constructor(accountHolder, balance) {
+                this.accountHolder = accountHolder;
+                this.balance = balance;
+            }
+            deposit(amount) { this.balance += amount; }
+            withdraw(amount) { if (this.balance >= amount) this.balance -= amount; }
+        }
+
+        function transfer(fromAccount, toAccount, amount) {
+            if (fromAccount.balance >= amount) {
+                fromAccount.withdraw(amount);
+                toAccount.deposit(amount);
+            }
+        }
+
+        function runBank() {
+            let acc1 = new BankAccount("Alice", 1000);
+            let acc2 = new BankAccount("Bob", 500);
+            transfer(acc1, acc2, 200);
+            document.getElementById("output").innerHTML =
+                `Alice Balance: ${acc1.balance}<br>Bob Balance: ${acc2.balance}`;
+        }
+    </script>
+</body>
+</html>

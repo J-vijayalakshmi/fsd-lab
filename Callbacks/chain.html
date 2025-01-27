@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chain Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chain Operations</h1>
+    <button onclick="performOperations()">Enter Number</button>
+    <script>
+        function multiplyBy2(num, callback) { callback(num * 2); }
+        function subtract3(num, callback) { callback(num - 3); }
+        function add10(num, callback) { callback(num + 10); }
+        function performOperations() {
+            let num = parseFloat(prompt("Enter a number:"));
+            if (!isNaN(num)) {
+                multiplyBy2(num, (result1) => {
+                    subtract3(result1, (result2) => {
+                        add10(result2, alert);
+                    });
+                });
+            }
+        }
+    </script>
+</body>
+</html>

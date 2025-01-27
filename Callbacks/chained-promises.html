@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chained Promises</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chained Promises</h1>
+    <button onclick="startChaining()">Enter Number</button>
+    <script>
+        function startChaining() {
+            let num = parseFloat(prompt("Enter a number:"));
+            if (!isNaN(num)) {
+                Promise.resolve(num).then(n => n + 5).then(n => n + 10).then(alert);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -14,17 +14,23 @@
 </head>
 <body>
     <h1>Fetch Data with Promise</h1>
-    <button onclick="fetchData()">Enter URL</button>
+    <button onclick="handleFetchData()">Enter URL</button>
     <script>
+        // This is the function that returns a Promise
         function fetchData(url) {
             return new Promise((resolve, reject) => {
                 setTimeout(() => url.includes("error") ? reject("Error fetching data.") : resolve("Data fetched successfully."), 1000);
             });
         }
-        function fetchData() {
+
+        // This is the function that handles the button click and prompts for the URL
+        function handleFetchData() {
             let url = prompt("Enter a URL:");
             if (url) {
-                fetchData(url).then(alert).catch(alert);
+                // Call the fetchData function and handle success or failure
+                fetchData(url)
+                    .then(result => alert(result))   // Alert success message
+                    .catch(error => alert(error));  // Alert error message
             }
         }
     </script>

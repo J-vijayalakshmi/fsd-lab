@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chained Promises with Stylish Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .user-card, .post-card, .comment-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .user-card:hover, .post-card:hover, .comment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-list, .comment-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .post-list li, .comment-list li {
+            background-color: #f9f9f9;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .post-list li:hover, .comment-list li:hover {
+            background-color: #f1f1f1;
+        }
+
+        .post-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .comment-text {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .loading {
+            font-size: 18px;
+            color: #007bff;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Fetch User, Posts, and Comments</h1>
+    <button onclick="loadData()">Load Data</button>
+
+    <div id="output"></div>
+
+    <script>
+        // Simulate fetching user data from an API
+        function fetchUserData() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const userData = { id: 1, name: 'John Doe' };
+                    console.log('User data fetched:', userData);
+                    resolve(userData); // Resolve with user data
+                }, 1000);
+            });
+        }
+
+        // Simulate fetching posts of the user
+        function fetchUserPosts(userId) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const posts = [
+                        { id: 101, title: 'Post 1', userId: userId },
+                        { id: 102, title: 'Post 2', userId: userId }
+                    ];
+                    console.log(`Posts fetched for user ${userId}:`, posts);
+                    resolve(posts); // Resolve with posts data
+                }, 1000);
+            });
+        }
+
+        // Simulate fetching comments for a specific post
+        function fetchPostComments(postId) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const comments = [
+                        { postId: postId, comment: 'Great post!' },
+                        { postId: postId, comment: 'Very informative!' }
+                    ];
+                    console.log(`Comments fetched for post ${postId}:`, comments);
+                    resolve(comments); // Resolve with comments data
+                }, 1000);
+            });
+        }
+
+        // Function that chains promises
+        function loadData() {
+            // Show loading message
+            document.getElementById('output').innerHTML = '<div class="loading">Loading...</div>';
+
+            fetchUserData() // Step 1: Fetch user data
+                .then(user => {
+                    // Display user info in a card
+                    const userCard = document.createElement('div');
+                    userCard.classList.add('user-card');
+                    userCard.innerHTML = `<h3>User: ${user.name}</h3>`;
+                    document.getElementById('output').innerHTML = ''; // Clear loading message
+                    document.getElementById('output').appendChild(userCard);
+                    
+                    // Step 2: Fetch posts of the user using user ID
+                    return fetchUserPosts(user.id);
+                })
+                .then(posts => {
+                    // Display posts in cards
+                    const postList = document.createElement('ul');
+                    postList.classList.add('post-list');
+                    posts.forEach(post => {
+                        const postCard = document.createElement('div');
+                        postCard.classList.add('post-card');
+                        postCard.innerHTML = `
+                            <div class="post-title">${post.title}</div>
+                            <ul class="comment-list" id="comments-${post.id}"></ul>
+                        `;
+                        postList.appendChild(postCard);
+
+                        // For each post, fetch the comments
+                        fetchPostComments(post.id).then(comments => {
+                            const commentList = document.getElementById(`comments-${post.id}`);
+                            comments.forEach(comment => {
+                                const commentItem = document.createElement('li');
+                                commentItem.classList.add('comment-card');
+                                commentItem.innerHTML = `<p class="comment-text">${comment.comment}</p>`;
+                                commentList.appendChild(commentItem);
+                            });
+                        });
+                    });
+                    document.getElementById('output').appendChild(postList);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+    </script>
+</body>
+</html>

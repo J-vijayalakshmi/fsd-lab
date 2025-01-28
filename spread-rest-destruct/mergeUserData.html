@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge User Data</title>
+</head>
+<body>
+    <h1>Merge User Data</h1>
+    <input type="text" id="userDataInput" placeholder='Enter objects JSON'>
+    <button onclick="merge()">Merge</button>
+    <div id="output"></div>
+
+    <script>
+        function mergeUserData(...objects) {
+            return Object.assign({}, ...objects);
+        }
+
+        function merge() {
+            const objects = JSON.parse(`[${document.getElementById("userDataInput").value}]`);
+            document.getElementById("output").innerText = JSON.stringify(mergeUserData(...objects));
+        }
+    </script>
+</body>
+</html>

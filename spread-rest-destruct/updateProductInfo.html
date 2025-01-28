@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product Info</title>
+</head>
+<body>
+    <h1>Update Product Info</h1>
+    <input type="text" id="productInput" placeholder='Enter product JSON'>
+    <button onclick="update()">Update</button>
+    <div id="output"></div>
+
+    <script>
+        function updateProductInfo(product) {
+            const { id, name } = product;
+            return { id, name, discount: 10, inStock: true };
+        }
+
+        function update() {
+            const product = JSON.parse(document.getElementById("productInput").value);
+            document.getElementById("output").innerText = JSON.stringify(updateProductInfo(product));
+        }
+    </script>
+</body>
+</html>

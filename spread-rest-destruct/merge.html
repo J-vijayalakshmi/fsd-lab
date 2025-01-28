@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Arrays</title>
+</head>
+<body>
+    <h1>Merge Arrays</h1>
+    <input type="text" id="arraysInput" placeholder="Enter arrays (e.g. [1,2],[3,4])">
+    <button onclick="merge()">Merge</button>
+    <div id="output"></div>
+
+    <script>
+        function mergeArrays(...arrays) {
+            return [].concat(...arrays);
+        }
+
+        function merge() {
+            const input = document.getElementById("arraysInput").value;
+            const arrays = JSON.parse(`[${input}]`);
+            document.getElementById("output").innerText = JSON.stringify(mergeArrays(...arrays));
+        }
+    </script>
+</body>
+</html>

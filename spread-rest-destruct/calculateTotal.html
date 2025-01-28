@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Total</title>
+</head>
+<body>
+    <h1>Calculate Total</h1>
+    <input type="text" id="numbersInput" placeholder="Enter numbers (e.g. 10,20,30)">
+    <button onclick="calculate()">Calculate</button>
+    <div id="output"></div>
+
+    <script>
+        function calculateTotal(...numbers) {
+            return numbers.reduce((sum, num) => sum + num, 0);
+        }
+
+        function calculate() {
+            const input = document.getElementById("numbersInput").value.split(',').map(Number);
+            document.getElementById("output").innerText = calculateTotal(...input);
+        }
+    </script>
+</body>
+</html>

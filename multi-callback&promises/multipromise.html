@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Promises Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .result h3 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Multiple Promises Example</h1>
+    <button onclick="startProcess()">Start Process</button>
+
+    <div id="userData" class="result">
+        <h3>User Data:</h3>
+        <p id="userDetails">Loading...</p>
+    </div>
+
+    <div id="userPosts" class="result">
+        <h3>User Posts:</h3>
+        <ul id="postsList">Loading...</ul>
+    </div>
+
+    <div id="userComments" class="result">
+        <h3>User Comments:</h3>
+        <ul id="commentsList">Loading...</ul>
+    </div>
+
+    <script>
+        function fetchUserData() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const userData = { name: "John Doe", age: 30 };
+                    resolve(userData); 
+                }, 1000); 
+            });
+        }
+
+        
+        function fetchUserPosts() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const posts = [
+                        { title: "Post 1", content: "This is the first post." },
+                        { title: "Post 2", content: "This is the second post." }
+                    ];
+                    resolve(posts); 
+                }, 1500); 
+            });
+        }
+
+        
+        function fetchUserComments() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const comments = [
+                        { comment: "Great post!" },
+                        { comment: "Very informative." }
+                    ];
+                    resolve(comments);
+                }, 2000); 
+            });
+        }
+
+        
+        function startProcess() {
+            
+            Promise.all([fetchUserData(), fetchUserPosts(), fetchUserComments()])
+                .then(results => {
+                    const [userData, posts, comments] = results;
+
+                    
+                    document.getElementById('userDetails').innerHTML = 
+                        `Name: ${userData.name}<br>Age: ${userData.age}`;
+
+                   
+                    const postsList = document.getElementById('postsList');
+                    postsList.innerHTML = ''; 
+                    posts.forEach(post => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `<strong>${post.title}</strong>: ${post.content}`;
+                        postsList.appendChild(listItem);
+                    });
+
+                    
+                    const commentsList = document.getElementById('commentsList');
+                    commentsList.innerHTML = ''; 
+                    comments.forEach(comment => {
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = comment.comment;
+                        commentsList.appendChild(listItem);
+                    });
+                })
+                .catch(error => {
+                    
+                    document.getElementById('userDetails').innerHTML = "Error fetching data.";
+                    document.getElementById('postsList').innerHTML = "Error fetching posts.";
+                    document.getElementById('commentsList').innerHTML = "Error fetching comments.";
+                    console.error("Error:", error);
+                });
+        }
+    </script>
+</body>
+</html>

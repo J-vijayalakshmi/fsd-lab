@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise Timeout Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .output {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .loading {
+            font-size: 18px;
+            color: #007bff;
+        }
+
+        .error {
+            font-size: 18px;
+            color: red;
+        }
+
+        .success {
+            font-size: 18px;
+            color: green;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Promise with Timeout</h1>
+    <button onclick="loadData()">Start Operation</button>
+
+    <div id="output" class="output"></div>
+
+    <script>
+        function fetchDataWithTimeout() {
+            return new Promise((resolve, reject) => {
+                // Simulate an operation that takes 5 seconds (can be any async operation)
+                const timeout = setTimeout(() => {
+                    resolve("Data fetched successfully!");
+                }, 5000); // 5 seconds for operation completion
+
+                // Timeout error rejection after 3 seconds
+                const timeoutError = setTimeout(() => {
+                    reject("Operation timed out after 3 seconds");
+                    clearTimeout(timeout); // Clear the original timeout since operation failed
+                }, 3000); // 3 seconds timeout limit
+            });
+        }
+
+        function loadData() {
+            const outputDiv = document.getElementById("output");
+
+            // Display loading state
+            outputDiv.innerHTML = '<div class="loading">Loading data...</div>';
+
+            fetchDataWithTimeout()
+                .then(result => {
+                    // If promise resolves, show success message
+                    outputDiv.innerHTML = `<div class="success">${result}</div>`;
+                })
+                .catch(error => {
+                    // If promise is rejected (timeout), show error message
+                    outputDiv.innerHTML = `<div class="error">${error}</div>`;
+                });
+        }
+    </script>
+
+</body>
+</html>
